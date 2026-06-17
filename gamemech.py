@@ -84,6 +84,7 @@ PLATFORMS = [
 
 WORLD_HEIGHT = 1900  # total height of the tower world
 
+###############################
 
 class Player:
     def __init__(self):
