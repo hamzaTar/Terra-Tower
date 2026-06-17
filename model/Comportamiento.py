@@ -24,16 +24,16 @@ class ComportamientoPejagoso(Comportamiento):
         player.vx = 0
 
 class ComportamientoViento(Comportamiento):
-    def __init__(self, direccion):
+    def __init__(self):
         num = random.randint(1, 2)
         valor = random.randint(1, 10)
         if num == 1:
-            self.direccion += valor
+            self.direccion = valor
         else:
-            self.direccion -= valor
+            self.direccion = -valor
 
     def aplicar(self, player):
-        player.vx += self.direcction
+        player.vx += self.direccion
 
 class ComportamientoRebote(Comportamiento):
     def aplicar(self, player):
