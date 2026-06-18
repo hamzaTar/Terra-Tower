@@ -3,6 +3,7 @@ class Player:
         self.x = x
         self.y = y
         self.isOnGround = True
+        self.isOnCheckPoint = False
         self.isCharging = False
         self.vx = 4
         self.vy = 6
@@ -11,7 +12,7 @@ class Player:
         self.monedas = 0
         # Para habilidades
         self.saltos_restantes = 1
-        self.habilidades = []
+        self.habilidades = {"doubleJump": False, "wallJump": False, "dash": False}
 
     def movimiento(self, direccion):
         if direccion == "izq":
@@ -20,13 +21,15 @@ class Player:
             self.x += self.vx
 
     def saltar(self):
-        for i in self.habilidades:
-            if i == "doubleJump":
-                self.saltos_restantes += 1
-        if self.isOnGround:
+        if self.habilidades.values("doubleJump") == True and self.saltos_restantes > 0:
             self.y -= self.vy
             self.saltos_restantes -= 1
-            if not self.isOnGround and self.saltos_restantes > 0:
+            self.isOnGround = False
+            Player.saltar()
+        elif self.habilidades.values("doubleJump") == True and self.saltos_restantes == 1:
+            self.y -= self.vy
+            self.saltos_restantes -= 1
+            self.isOnGround = False
 
     def gravedad(self):
         pass
