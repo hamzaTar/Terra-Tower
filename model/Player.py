@@ -1,18 +1,20 @@
 class Player:
-    def __init__(self, x, y):
+    def __init__(self, x, y, isOnCheckPoint):
         self.x = x
         self.y = y
         self.isOnGround = True
-        self.isOnCheckPoint = False
-        self.isCharging = False
+        self.isOnCheckPoint = isOnCheckPoint
         self.vx = 4
         self.vy = 6
+        self.saltos_restantes = 1
+        self.saltos_maximos = 1
+        self.isCharging = False
+        self.carga = 0 # Tanto por uno nos indica del porcentaje de carga del salto
         # Puntuación y monedas
         self.puntuacion = 0
         self.monedas = 0
         # Para habilidades
-        self.saltos_restantes = 1
-        self.habilidades = {"doubleJump": False, "wallJump": False, "dash": False}
+        self.habilidades = {"doubleJump": False, "tripleJump": False, "wallJump": False, "dash": False}
 
     def movimiento(self, direccion):
         if direccion == "izq":
@@ -21,19 +23,37 @@ class Player:
             self.x += self.vx
 
     def saltar(self):
-        if self.habilidades.values("doubleJump") == True and self.saltos_restantes > 0:
-            self.y -= self.vy
-            self.saltos_restantes -= 1
-            self.isOnGround = False
-            Player.saltar()
-        elif self.habilidades.values("doubleJump") == True and self.saltos_restantes == 1:
-            self.y -= self.vy
+        if self.saltos_restantes > 0:
+            self.vy = -12
             self.saltos_restantes -= 1
             self.isOnGround = False
 
     def gravedad(self):
-        pass
+        self.vy += 0.8
+        self.y += self.vy
 
     def caida_picado(self):
         if not self.isOnGround:
-            self.y += self.vy
+            self.vy = 14
+
+    def aterrizar(self):
+        self.isOnGround = True
+        self.saltos_restantes = 1
+        self.vy = 0
+
+
+    def get_Bounds(self):
+        ancho = 800
+        alto = 500
+        ancho_paredes = 30
+
+    def desbloquear_habilidad(self, habilidad):
+        self.habilidades[habilidad] = True
+        if self.habilidades["doubleJump"] == True:
+            self.saltos_maximos = 2
+        elif self.habilidades["tripleJump"] == True:
+            self.saltos_maximos = 3
+        elif self.habilidades["wallJump"] == True:
+            pass
+        elif self.habilidades["dash"] == True:
+            self.vx = 14
