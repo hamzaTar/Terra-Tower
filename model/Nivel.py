@@ -226,19 +226,24 @@ class Nivel:
                 wx = col_i * TILE_SIZE
                 wy = row_i * TILE_SIZE - y_offset
 
+                # platforms // blocks
                 if tile == 'X':
                     self.superficies.append(
                         Superficies(wx, wy, TILE_SIZE, TILE_SIZE, normal)
                     )
+                # wind 
                 elif tile == 'W':
                     self.superficies.append(
                         Superficies(wx, wy, TILE_SIZE, TILE_SIZE, viento)
                     )
+                # coins spawn points 
                 elif tile == 'C':
                     self.monedas.append(Monedas(wx, wy))
+                # spawn point of player 
                 elif tile == 'P':
                     self.spawn_x = wx
                     self.spawn_y = wy
+                # wining zone or point
                 elif tile == 'G':  
                     self.goal_x = wx
                     self.goal_y = wy
