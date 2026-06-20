@@ -3,7 +3,7 @@ class Superficies:
         self.x = x
         self.y = y
         self.largo = largo
-        self.alto = alto
+        self.ancho = ancho 
         # Los 7 comportamientos: Normal, Trampa, Resbaladizo, Pegajoso, Viento y Rebote
         self.comportamiento = comportamiento
 
@@ -11,4 +11,4 @@ class Superficies:
         self.comportamiento.aplicar(player)
 
     def on_Bounds(self):
-        return self.x, self.y, self.largo, self.alto
+        return self.x, self.y, self.largo, self.ancho

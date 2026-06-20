@@ -25,10 +25,10 @@ class Nivel:
     def _collide(self, limites_a, limites_b): # Mira si hay colision entre entidades (las distintas clases de Player, Monedas y Superficies)
         ax, ay, aw, ah = limites_a
         bx, by, bw, bh = limites_b
-
+        
 
     def update(self):
-        if _collide(Player.get_Bounds(), Superficies.get_Bounds()) == True:
+        if _collide(Player.get_Bounds(), Moneda.get_Bounds()) == True:
             pass
-        if _collide(Player.get_Bounds(), Moneda.get_Bounds()) == True and Moneda.recogida == False:
+        if _collide(Player.get_Bounds(), Monedas.get_Bounds()) == True and Moneda.recogida == False:
             pass
