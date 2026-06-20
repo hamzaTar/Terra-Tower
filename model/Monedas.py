@@ -1,4 +1,4 @@
-class Moneda:
+class Monedas:
     def __init__(self, x, y):
         self.x = x
         self.y = y
