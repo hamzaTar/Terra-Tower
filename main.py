@@ -1,11 +1,9 @@
-import os
-import sys
 import time
 #install watchdog in your venv
 from multiprocessing import Process
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from Presenter import GamePresenter
+from presenter.Presenter import GamePresenter
 
 def run_game():
     try:
