@@ -19,7 +19,7 @@ class ComportamientoResbaladizo(Comportamiento):
     def aplicar(self, player):
         player.vx *= 0.7
 
-class ComportamientoPejagoso(Comportamiento):
+class ComportamientoPegajoso(Comportamiento):
     def aplicar(self, player):
         player.vx = 0
 

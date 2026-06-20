@@ -1,11 +1,11 @@
 class Player:
-    def __init__(self, x, y, isOnCheckPoint):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
         self.player_w = 30
         self.player_h = 30
         self.isOnGround = True
-        self.isOnCheckPoint = isOnCheckPoint
+        self.isOnCheckPoint = Flase
         self.vx = 4
         self.vy = 6
         self.saltos_restantes = 1
