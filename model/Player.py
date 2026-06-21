@@ -8,12 +8,14 @@ class Player:
         self.isOnCheckPoint = isOnCheckPoint
         self.vx = 0.0
         self.vy = 0.0
+        self.move_speed = 6
         self.saltos_restantes = 1
         self.saltos_maximos = 1
         self.isCharging = False
-        self.carga = 0.0               
-        self.jump_dir = 0              
-        self.facing = 1                
+        self.carga = 0.0
+        self.jump_dir = 0
+        self.facing = 1
+        self.gravedad_Max = 20
         self.puntuacion = 0
         self.monedas = 0
         self.habilidades = {
@@ -23,14 +25,24 @@ class Player:
             "dash": False
         }
 
-
-    # Hecho en presenter
     def movimiento(self, direccion):
-        pass   
+        if direccion == "izq":
+            self.vx = -self.move_speed
+            self.facing = -1
+            self.jump_dir = -1
+        elif direccion == "derch":
+            self.vx = self.move_speed
+            self.facing = 1
+            self.jump_dir = 1
+        else:
+            self.vx = 0
+            self.jump_dir = 0
 
     def cargar_salto(self):
+        if not self.isCharging:  # primera vez que empieza a cargar
+            self.carga = 8  # salto mínimo garantizado
         self.isCharging = True
-        self.carga += 0.6  
+        self.carga += 0.6
         if self.carga > 18.0:
             self.carga = 18.0
 
@@ -44,7 +56,9 @@ class Player:
             self.isCharging = False
 
     def gravedad(self):
-        self.vy += 0.6 
+        self.vy += 0.6
+        if self.vy > self.gravedad_Max:
+            self.vy = self.gravedad_Max
 
     def caida_picado(self):
         if not self.isOnGround:

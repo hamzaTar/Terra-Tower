@@ -24,7 +24,7 @@ C_DEAD_TEXT  = (230,  80,  80)
 _BEHAVIOUR_COLOURS = {
     "ComportamientoNormal":      C_PLATFORM,
     "ComportamientoResbaladizo": C_SLIPPERY,
-    "ComportamientoPejagoso":    C_STICKY,
+    "ComportamientoPegajoso":    C_STICKY,
     "ComportamientoRebote":      C_BOUNCY,
     "ComportamientoViento":      C_WIND,
     "ComportamientoTrampa":      C_TRAP,
@@ -44,7 +44,7 @@ class GameView:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]  or keys[pygame.K_a]: actions.append("izq")
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]: actions.append("derch")
-        if keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_w]: actions.append("jump")
+        if keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_w]: actions.append("salta")
         if keys[pygame.K_DOWN]  or keys[pygame.K_s]: actions.append("down")
         return actions
 
@@ -76,8 +76,17 @@ class GameView:
     def _draw_player(self, player, cam_y):
         px, py, pw, ph = player.get_Bounds()
         x, y = int(px), int(py - cam_y)
-        col = C_PLAYER_CHG if player.isCharging else C_PLAYER
-        pygame.draw.rect(self.screen, col, (x, y, int(pw), int(ph)), border_radius=5)
+
+        # 1. Dibujar el jugador base (color normal)
+        pygame.draw.rect(self.screen, C_PLAYER, (x, y, int(pw), int(ph)), border_radius=5)
+
+        # 2. Si está cargando, rellenar de amarillo desde abajo
+        if player.isCharging:
+            fraccion = player.carga / 18  # cuánto está cargado (0 a 1)
+            altura_amarilla = int(ph * fraccion)  # altura del relleno
+            y_amarillo = y + ph - altura_amarilla  # empieza desde abajo
+            pygame.draw.rect(self.screen, C_PLAYER_CHG,
+                             (x, y_amarillo, int(pw), altura_amarilla), border_radius=5)
 
     def _draw_hud(self, player, nivel):
         count = sum(1 for m in nivel.moneda if m.cogida)
