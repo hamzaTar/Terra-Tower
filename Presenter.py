@@ -5,6 +5,7 @@ from model.Player import Player
 from model.Nivel  import Nivel
 from View   import GameView, WIDTH, HEIGHT, C_WIN_TEXT, C_DEAD_TEXT
 from model.Nivel import TILE_SIZE
+from model.Pinicio import PantallaInicio
 
 COIN_SIZE   = 30
 COIN_POINTS = 10
@@ -33,6 +34,13 @@ class GamePresenter:
         self._won     = False
 
     def run(self):
+        pantalla_inicio = PantallaInicio(self.view.screen, WIDTH, HEIGHT)
+        resultado = pantalla_inicio.ejecutar()
+
+        if resultado == "salir":
+            self.view.close()
+            sys.exit()
+
         while True:
             if self.view.check_quit():
                 self.view.close()
