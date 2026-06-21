@@ -2,7 +2,8 @@ import pygame
 import sys
 
 from model.GameWorld import GameWorld
-from view.View import GameView, HEIGHT
+from view.View import GameView, HEIGHT, WIDTH
+from model.Pinicio import PantallaInicio
 
 
 class GamePresenter:
@@ -16,6 +17,14 @@ class GamePresenter:
         self._cam_y = self.game_world.player.y - HEIGHT // 2
 
     def run(self):
+
+        # 0. Display pantalla de inicio
+        pantalla_inicio = PantallaInicio(self.view.screen, WIDTH, HEIGHT)
+        display = pantalla_inicio.ejecutar()
+        if display == 'salir':
+            self.view.screen.close()
+            sys.exit()
+
         while True:
             # 1. Comprobar si se quiere salir
             if self.view.check_quit():
