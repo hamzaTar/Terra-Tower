@@ -8,7 +8,7 @@ c_suelo_sombra = (45, 95, 30)
 
 c_interior = (240, 235, 220)
 c_muro_ext = (80, 80, 85)
-c_tejado = (210, 200, 185)
+c_tejado = (140, 60, 45)
 c_puerta_fill = (200, 185, 160)
 c_puerta_marc = c_muro_ext
 c_pomo = c_muro_ext
@@ -24,7 +24,7 @@ espesor = 5
 
 posx_punta, posy_punta = ancho_cast // 2, 30
 
-num_col = 3
+num_col = 2
 num_filas = 2
 ancho_habitacion = ancho_cast // num_col
 alto_habitacion = alto_cast // num_filas
@@ -34,7 +34,7 @@ alto_puerta = 105
 espesor_puerta = 12
 
 class Castillo:
-    def __init__(self, aparienza, ancho, alto, modelo, pos_inicio):
+    def __init__(self, aparienza, ancho, alto, modelo, pos_inicio = None):
         self.aparienza = aparienza
         self.ancho = ancho
         self.alto = alto
@@ -42,12 +42,27 @@ class Castillo:
         self.font_sm = pygame.font.SysFont(None, 22)
         self.relog = pygame.time.Clock()
         self.sombra = pygame.Surface((ancho_habitacion, alto_habitacion), pygame.SRCALPHA)
-        self.sombra.fill((0, 0, 160))
+        self.sombra.fill((0, 0, 0, 160))
         posx_ini_jugador = pos_inicio if pos_inicio is not None else ancho_habitacion // 2
         self.jugador = Player(posx_ini_jugador, posy_suelo - 30, False)
 
     def ejecutar(self):
-        pass
+        while True:
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    return 'salir'
+                if evento.type == pygame.KEYDOWN:
+                    if evento.key == pygame.K_ESCAPE:
+                        return 'menu'
+
+            self.actualizar_jugador()
+
+            if self.jugador.x + self.jugador.player_w < 0:
+                return 'torre'
+
+            self.dibujar()
+            pygame.display.flip()
+            self.relog.tick(60)
 
     def actualizar_jugador(self):
         p = self.jugador
@@ -109,7 +124,6 @@ class Castillo:
         self.dibujar_fondo()
         self.dibujar_relleno_interior()
         self.dibujar_puerta_izquierda()
-        self.dibujar_puerta_derecha()
         self.dibujar_muros_exteriores()
         self.dibujar_sombreado_bloqueadas()
         self.dibujar_jugador()
@@ -132,12 +146,6 @@ class Castillo:
         pygame.draw.rect(self.aparienza, c_puerta_marc, pygame.Rect(px, py, ancho_puerta, alto_puerta), 2)
         pygame.draw.circle(self.aparienza, c_pomo, (px + ancho_puerta - 12, py + alto_puerta // 2), 5)
 
-    def dibujar_puerta_derecha(self):
-        px = ancho_cast - ancho_puerta
-        py = posy_suelo - alto_puerta
-        pygame.draw.rect(self.aparienza, c_puerta_fill, pygame.Rect(px, py, ancho_puerta, alto_puerta))
-        pygame.draw.rect(self.aparienza, c_puerta_marc, pygame.Rect(px, py, ancho_puerta, alto_puerta), 2)
-        pygame.draw.circle(self.aparienza, c_pomo, (px + 12, py + alto_puerta // 2), 5)
 
     def dibujar_muros_exteriores(self):
         pygame.draw.rect(self.aparienza, c_muro_ext, pygame.Rect(posx_cast, posy_cast, ancho_cast, alto_cast), espesor)
@@ -145,8 +153,8 @@ class Castillo:
     def dibujar_sombreado_bloqueadas(self):
         for i, desbloqueada in enumerate(self.modelo.habitaciones):
             if not desbloqueada:
-                rect = self._rect_habitacion(i)
-                self.aparienza.blit(self._sombra, rect.topleft)
+                rect = self.rect_habitacion(i)
+                self.aparienza.blit(self.sombra, rect.topleft)
 
     def dibujar_jugador(self):
         p = self.jugador
