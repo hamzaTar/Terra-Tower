@@ -1,9 +1,8 @@
+from model.Player import Player
+from model.Moneda import Moneda
 from model.Superficies import Superficies
-from model.Comportamiento import (
-    ComportamientoNormal,
-    ComportamientoViento,
-)
-from model.Monedas import Monedas
+from model.Comportamiento import (ComportamientoNormal, ComportamientoTrampa, ComportamientoResbaladizo,
+                                  ComportamientoPegajoso, ComportamientoViento, ComportamientoRebote)
 
 TILE_SIZE = 40
 HEIGHT = 600
@@ -201,25 +200,29 @@ LEVEL_MAP = [
     "XXXXXXXXXXXXXXXXXXXX",
 ]
 
-
 class Nivel:
     def __init__(self):
         self.superficies: list[Superficies] = []
-        self.monedas: list[Monedas] = []
+        self.moneda: list[Moneda] = []
         self.spawn_x = 0
         self.spawn_y = 0
         self.goal_x = 0  
-        self.goal_y = 0  
+        self.goal_y = 0
+
+        #self.width = width
+        #self.height = height
+        #self.player = Player(0, 0)
 
     def cargar(self):
         self.superficies = []
-        self.monedas = []
+        self.moneda = []
 
         total_rows = len(LEVEL_MAP)
         y_offset = (total_rows * TILE_SIZE) - HEIGHT
 
         normal = ComportamientoNormal()
         viento = ComportamientoViento()
+
 
         for row_i, row in enumerate(LEVEL_MAP):
             for col_i, tile in enumerate(row):
@@ -238,7 +241,7 @@ class Nivel:
                     )
                 # coins spawn points 
                 elif tile == 'C':
-                    self.monedas.append(Monedas(wx, wy))
+                    self.moneda.append(Moneda(wx, wy))
                 # spawn point of player 
                 elif tile == 'P':
                     self.spawn_x = wx
@@ -248,3 +251,13 @@ class Nivel:
                     self.goal_x = wx
                     self.goal_y = wy
 
+    """def _collide(self, limites_a,
+                 limites_b):  # Mira si hay colision entre entidades (las distintas clases de Player, Moneda y Superficies)
+        ax, ay, aw, ah = limites_a
+        bx, by, bw, bh = limites_b"""
+
+    """def update(self):
+        if _collide(Player.get_Bounds(), Moneda.get_Bounds()) == True:
+            pass
+        if _collide(Player.get_Bounds(), Moneda.get_Bounds()) == True and Moneda.recogida == False:
+            pass"""

@@ -69,7 +69,7 @@ class GameView:
         for plat in nivel.superficies:
             col = _BEHAVIOUR_COLOURS.get(type(plat.comportamiento).__name__, C_PLATFORM)
             pygame.draw.rect(self.screen, col, (int(plat.x), int(plat.y - cam_y), int(plat.largo), int(plat.ancho)))
-        for coin in nivel.monedas:
+        for coin in nivel.moneda:
             if not coin.cogida:
                 pygame.draw.circle(self.screen, C_COIN, (int(coin.x + 10), int(coin.y - cam_y + 10)), 10)
 
@@ -80,8 +80,8 @@ class GameView:
         pygame.draw.rect(self.screen, col, (x, y, int(pw), int(ph)), border_radius=5)
 
     def _draw_hud(self, player, nivel):
-        count = sum(1 for m in nivel.monedas if m.cogida)
-        text = f"Monedas: {count}/{len(nivel.monedas)} | Puntuación: {player.puntuacion}"
+        count = sum(1 for m in nivel.moneda if m.cogida)
+        text = f"moneda: {count}/{len(nivel.moneda)} | Puntuación: {player.puntuacion}"
         surf = self.font_sm.render(text, True, C_HUD)
         self.screen.blit(surf, (10, 10))
 

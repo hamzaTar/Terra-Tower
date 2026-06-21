@@ -3,7 +3,7 @@ import sys
 
 from model.Player import Player
 from model.Nivel  import Nivel
-from View   import GameView, WIDTH, HEIGHT, C_WIN_TEXT, C_DEAD_TEXT
+from view.View import GameView, HEIGHT, C_WIN_TEXT
 from model.Nivel import TILE_SIZE
 from model.Pinicio import PantallaInicio
 
@@ -175,11 +175,11 @@ class GamePresenter:
     def _check_coins(self):
         p  = self.player
         pr = pygame.Rect(int(p.x), int(p.y), p.player_w, p.player_h)
-        for coin in self.nivel.monedas:
+        for coin in self.nivel.moneda:
             if coin.cogida:
                 continue
             cr = pygame.Rect(coin.x, coin.y, COIN_SIZE, COIN_SIZE)
             if pr.colliderect(cr):
                 coin.cogida   = True
-                p.monedas    += 1
+                p.moneda    += 1
                 p.puntuacion += COIN_POINTS

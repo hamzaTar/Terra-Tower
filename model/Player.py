@@ -24,7 +24,7 @@ class Player:
         }
 
 
-    # echo en presenter
+    # Hecho en presenter
     def movimiento(self, direccion):
         pass   
 
