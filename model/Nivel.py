@@ -32,7 +32,7 @@ LEVEL_MAP = [
     "X                  X",
     #  SCREEN 99 
     "X                  X",
-    "X    XXXXXXXX      X",
+    "X    XXXXX         X",
     "X                  X",
     "X                  X",
     "X                  X",
@@ -111,7 +111,7 @@ LEVEL_MAP = [
     "X     XXXX         X",
     "X               XXXX",
     "X   WWWWWWWWWWWWWWWX",
-    "X                  X",
+    "XX                 X",
     "X                  X",
     "X        XXXX      X",
     # SCREEN 49 another windy floor 
@@ -125,7 +125,7 @@ LEVEL_MAP = [
     "X                  X",
     "X                  X",
     "XXX                X",
-    "X   WWWWWWWWWWWWWWWX",
+    "X      WWWWWWWWWWWWX",
     "X               WWWX",
     "X             WWWWWX",
     "X           WWWWWWWX",
