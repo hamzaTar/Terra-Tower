@@ -1,8 +1,6 @@
-from model.Player import Player
 from model.Moneda import Moneda
 from model.Superficies import Superficies
-from model.Comportamiento import (ComportamientoNormal, ComportamientoTrampa, ComportamientoResbaladizo,
-                                  ComportamientoPegajoso, ComportamientoViento, ComportamientoRebote)
+from model.Comportamiento import (ComportamientoNormal, ComportamientoViento)
 
 TILE_SIZE = 40
 HEIGHT = 600
@@ -202,12 +200,13 @@ LEVEL_MAP = [
 
 class Nivel:
     def __init__(self):
-        self.superficies: list[Superficies] = []
-        self.moneda: list[Moneda] = []
         self.spawn_x = 0
         self.spawn_y = 0
-        self.goal_x = 0  
+        self.goal_x = 0
         self.goal_y = 0
+
+        self.superficies: list[Superficies] = []
+        self.moneda: list[Moneda] = []
 
         #self.width = width
         #self.height = height
