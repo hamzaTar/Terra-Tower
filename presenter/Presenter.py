@@ -3,7 +3,7 @@ import sys
 
 from model.Player import Player
 from model.Nivel  import Nivel
-from view.View import GameView, HEIGHT, C_WIN_TEXT
+from view.View import GameView, HEIGHT, WIDTH, C_WIN_TEXT
 from model.Nivel import TILE_SIZE
 from model.Pinicio import PantallaInicio
 
@@ -12,8 +12,7 @@ COIN_POINTS = 10
 GRAVITY_MAX = 20
 MOVE_SPEED  = 5       
 WIND_FORCE  = -0.3    
-WALL_BOUNCE = 0.7     
-
+WALL_BOUNCE = 0.7
 
 class GamePresenter:
     def __init__(self):

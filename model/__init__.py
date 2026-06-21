@@ -6,7 +6,7 @@ gestión de entrada de usuario mediante Pygame.
 
 # Importamos las clases principales para "exponerlas" al exterior
 # Esto permite usar: from view import PygameView
-from View import GameView
+from view.View import GameView
 
 # La lista __all__ define qué se exporta cuando alguien hace: from view import *
 __all__ = ['GameView']
