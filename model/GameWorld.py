@@ -16,6 +16,10 @@ class GameWorld:
         self.won = False
         self.message = None
         self.ir_castillo = False
+        # Alto total del mundo (para detectar caidas)
+        self.world_height = len(self.nivel.superficies) and max(
+            (s.y for s in self.nivel.superficies), default=0
+        )
 
 
     def _collide(self, limites_a, limites_b):
@@ -53,8 +57,10 @@ class GameWorld:
     def update(self, actions):
         p = self.player
 
-        # Movimiento lateral
-        if "izq" in actions:
+        # Movimiento lateral (bloqueado mientras se carga el salto, estilo Jump King)
+        if p.isCharging:
+            p.movimiento("")
+        elif "izq" in actions:
             p.movimiento("izq")
         elif "derch" in actions:
             p.movimiento("derch")
@@ -97,6 +103,14 @@ class GameWorld:
         if self._collide(p.get_Bounds(), meta_bounds):
             self.won = True
             self.message = "¡VICTORIA!"
+
+        # Muerte por caida: si cae por debajo del mundo, vuelve al spawn
+        if p.y > self.world_height + 200:
+            p.x = p.spawn_x
+            p.y = p.spawn_y
+            p.vx = 0
+            p.vy = 0
+            p.muertes += 1
 
         # Salir de la torre, volver al castillo
         if p.x + p.player_w > ancho_pantalla:

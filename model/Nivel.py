@@ -1,18 +1,20 @@
 from model.Moneda import Moneda
 from model.Superficies import Superficies
-from model.Comportamiento import (ComportamientoNormal, ComportamientoViento)
+from model.Comportamiento import (ComportamientoNormal, ComportamientoViento,
+                                  ComportamientoTrampa, ComportamientoResbaladizo,
+                                  ComportamientoPegajoso, ComportamientoRebote)
 
 TILE_SIZE = 40
 HEIGHT = 600
 LEVEL_MAP = [
-    #  SCREEN 100 
+    #  SCREEN 100
     "XXXXXXXXXXXXXXXXXXXX",
     "X                  X",
     "X                  X",
     "X                  X",
     "X                  X",
     "X       G          X",
-    "X      XXXX        X",
+    "X      XRRX        X",
     "X                  X",
     "X                  X",
     "X                  X",
@@ -28,9 +30,9 @@ LEVEL_MAP = [
     "XXX                X",
     "X                  X",
     "X                  X",
-    #  SCREEN 99 
+    #  SCREEN 99
     "X                  X",
-    "X    XXXXX         X",
+    "X    XXBXX         X",
     "X                  X",
     "X                  X",
     "X                  X",
@@ -61,7 +63,7 @@ LEVEL_MAP = [
     "X                  X",
     "X    XX            X",
     "X                  X",
-    #  SCREEN 79 
+    #  SCREEN 79
     "X                  X",
     "X                  X",
     "XXXXXXXXXX         X",
@@ -69,16 +71,16 @@ LEVEL_MAP = [
     "XXXXXXXXX          X",
     "X                 XX",
     "X                  X",
-    "X XXXX             X",
+    "X SXXS             X",
     "X                  X",
     "X                  X",
     "X                  X",
-    "X       XXXXXX     X",
+    "X       XXTXXX     X",
     "X                  X",
     "X                  X",
     "X    XXXX          X",
     "X                  X",
-    #  SCREEN 69 
+    #  SCREEN 69
     "X                  X",
     "X           XXXXX  X",
     "X                  X",
@@ -95,7 +97,7 @@ LEVEL_MAP = [
     "X                  X",
     "X    XXXX          X",
     "X                  X",
-    #  SCREEN 59 
+    #  SCREEN 59
     "X                  X",
     "X                  X",
     "X                  X",
@@ -112,7 +114,7 @@ LEVEL_MAP = [
     "XX                 X",
     "X                  X",
     "X        XXXX      X",
-    # SCREEN 49 another windy floor 
+    # SCREEN 49 another windy floor
     "X                  X",
     "X                  X",
     "X  XX           XXXX",
@@ -129,7 +131,7 @@ LEVEL_MAP = [
     "X           WWWWWWWX",
     "X      WWWWWWWWWWWWX",
     "X         XXXXXXXXXX",
-    #  SCREEN 39 windy intro 
+    #  SCREEN 39 windy intro
     "X                  X",
     "X                  X",
     "X                  X",
@@ -146,7 +148,7 @@ LEVEL_MAP = [
     "X                  X",
     "X                  X",
     "X   XX             X",
-    #  SCREEN 2 
+    #  SCREEN 2
     "X                  X",
     "X                  X",
     "X                  X",
@@ -163,7 +165,7 @@ LEVEL_MAP = [
     "XC         XXX     X",
     "XXX                X",
     "X                  X",
-    #  SCREEN 19 easy floor tut 
+    #  SCREEN 19 easy floor tut
     "X                  X",
     "X   XX             X",
     "X                  X",
@@ -180,7 +182,7 @@ LEVEL_MAP = [
     "X                  X",
     "X                  X",
     "XXXXXXXX           X",
-    #  SCREEN 9 spawn floor 
+    #  SCREEN 9 spawn floor
     "X                  X",
     "X              XXXXX",
     "X                  X",
@@ -220,8 +222,6 @@ class Nivel:
         y_offset = (total_rows * TILE_SIZE) - HEIGHT
 
         normal = ComportamientoNormal()
-        viento = ComportamientoViento()
-
 
         for row_i, row in enumerate(LEVEL_MAP):
             for col_i, tile in enumerate(row):
@@ -233,10 +233,30 @@ class Nivel:
                     self.superficies.append(
                         Superficies(wx, wy, TILE_SIZE, TILE_SIZE, normal)
                     )
-                # wind 
+                # wind  (cada bloque su propia direccion)
                 elif tile == 'W':
                     self.superficies.append(
-                        Superficies(wx, wy, TILE_SIZE, TILE_SIZE, viento)
+                        Superficies(wx, wy, TILE_SIZE, TILE_SIZE, ComportamientoViento())
+                    )
+                # trampa
+                elif tile == 'T':
+                    self.superficies.append(
+                        Superficies(wx, wy, TILE_SIZE, TILE_SIZE, ComportamientoTrampa())
+                    )
+                # resbaladizo (hielo)
+                elif tile == 'R':
+                    self.superficies.append(
+                        Superficies(wx, wy, TILE_SIZE, TILE_SIZE, ComportamientoResbaladizo())
+                    )
+                # pegajoso (sticky)
+                elif tile == 'S':
+                    self.superficies.append(
+                        Superficies(wx, wy, TILE_SIZE, TILE_SIZE, ComportamientoPegajoso())
+                    )
+                # rebote (bounce)
+                elif tile == 'B':
+                    self.superficies.append(
+                        Superficies(wx, wy, TILE_SIZE, TILE_SIZE, ComportamientoRebote())
                     )
                 # coins spawn points 
                 elif tile == 'C':

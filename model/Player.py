@@ -2,6 +2,8 @@ class Player:
     def __init__(self, x, y, isOnCheckPoint):
         self.x = x
         self.y = y
+        self.spawn_x = x
+        self.spawn_y = y
         self.player_w = 30
         self.player_h = 30
         self.isOnGround = True
@@ -18,6 +20,7 @@ class Player:
         self.gravedad_Max = 20
         self.puntuacion = 0
         self.monedas = 0
+        self.muertes = 0
         self.habilidades = {
             "doubleJump": False,
             "tripleJump": False,
