@@ -1,6 +1,7 @@
 from model.Nivel import Nivel, TILE_SIZE
 from model.Player import Player
 
+ancho_pantalla = 800
 
 class GameWorld:
     def __init__(self):
@@ -14,6 +15,7 @@ class GameWorld:
         # Estado del juego
         self.won = False
         self.message = None
+        self.ir_castillo = False
 
 
     def _collide(self, limites_a, limites_b):
@@ -96,3 +98,6 @@ class GameWorld:
             self.won = True
             self.message = "¡VICTORIA!"
 
+        # Salir de la torre, volver al castillo
+        if p.x + p.player_w > ancho_pantalla:
+            self.ir_castillo = True
